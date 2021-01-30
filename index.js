@@ -30,8 +30,8 @@ app.get('/user/:id', function (req, res) {
   console.log(
     `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
   );
-  const currentUserIdx = Number(req.params.id);
-  res.send(userList[currentUserIdx - 1]);
+  const currentUserId = Number(req.params.id);
+  res.send(userList[currentUserId - 1]);
 });
 
 // ______________________________
@@ -53,7 +53,7 @@ app.post('/user', function (req, res) {
   userList.push(user);
   // 확인
   console.log(req.body);
-  res.send(`새 유저 ${user.name}를 추가합니다`);
+  res.send(`${user.name} user Added!`);
 });
 
 //      특정 유저 데이터의 일부분 업데이트 (PATCH - 단일 자원을 업데이트) - Update
@@ -61,11 +61,11 @@ app.patch('/user/:id', function (req, res) {
   console.log(
     `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
   );
-  const currentUserIdx = Number(req.params.id);
+  const currentUserId = Number(req.params.id);
 
   // 첫 번째 유저
   userList.find((user) => {
-    if (user.id === currentUserIdx) {
+    if (user.id === currentUserId) {
       console.log(`before: ${JSON.stringify(user)}`);
       // request body 데이터를 받아와 원본 배열 교체
       user.twtId = req.body.twtId;
@@ -75,13 +75,38 @@ app.patch('/user/:id', function (req, res) {
     }
   });
 
+  console.log(userList[currentUserId - 1]);
   // 업데이트 후 response 출력
-  res.send(userList[currentUserIdx - 1]);
+  res.send(`success!`);
 });
 
-//      전체 유저 업데이트 (PUT - 일부 자원을 업데이트) - Update
+//      전체 유저 업데이트 (PUT - 전체 자원을 업데이트) - Update
+app.put('/users', function (req, res) {
+  console.log(
+    `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
+  );
+
+  for (let i = 0; i < userList.length; i++) {
+    userList[i].group = req.body.group;
+  }
+
+  console.log(userList);
+
+  res.send(`success!`);
+});
 
 //      특정 유저 삭제하기 (DELETE) - Delete
+
+app.delete('/user/:id', function (req, res) {
+  console.log(
+    `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
+  );
+
+  const currentUserIndex = Number(req.params.id) - 1;
+
+  userList.splice(currentUserIndex, 1);
+  console.log(userList);
+});
 
 // ______________________________
 
