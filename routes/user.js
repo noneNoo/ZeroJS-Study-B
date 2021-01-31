@@ -1,24 +1,18 @@
 'use strict';
-
-// express.js 를 가져온다
+// express 가져오기
 const express = require('express');
-const app = express();
 
-// 유저 목록
+// router 기능 가져오기
+const router = express.Router();
+
+// app을 router로 바꿔주었다
+// '/user' 경로를 '/'로 수정하였다
+
+// 유저 목록도 여기로 옮겼다
 const userList = [];
 
-// 미들웨어 사용 (Body데이터를 json으로 인식해 받아올 수 있는 미들웨어)
-app.use(express.json());
-
-// _______________Test
-app.get('/', function (req, res) {
-  res.send('express.js로 만든 server입니다.');
-});
-
-// ______________________________
-
 //      유저 전체 목록 불러오기 (Get) - Read
-app.get('/users', function (req, res) {
+router.get('/list', function (req, res) {
   console.log(
     `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
   );
@@ -26,7 +20,7 @@ app.get('/users', function (req, res) {
 });
 
 //      특정 유저 데이터 불러오기 (GET) - Read
-app.get('/user/:id', function (req, res) {
+router.get('/:id', function (req, res) {
   console.log(
     `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
   );
@@ -37,7 +31,7 @@ app.get('/user/:id', function (req, res) {
 // ______________________________
 
 //      유저 추가 (POST) - Create
-app.post('/user', function (req, res) {
+router.post('/', function (req, res) {
   console.log(
     `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
   );
@@ -57,7 +51,7 @@ app.post('/user', function (req, res) {
 });
 
 //      특정 유저 데이터의 일부분 업데이트 (PATCH - 단일 자원을 업데이트) - Update
-app.patch('/user/:id', function (req, res) {
+router.patch('/:id', function (req, res) {
   console.log(
     `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
   );
@@ -81,7 +75,7 @@ app.patch('/user/:id', function (req, res) {
 });
 
 //      전체 유저 업데이트 (PUT - 전체 자원을 업데이트) - Update
-app.put('/users', function (req, res) {
+router.put('/list', function (req, res) {
   console.log(
     `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
   );
@@ -97,7 +91,7 @@ app.put('/users', function (req, res) {
 
 //      특정 유저 삭제하기 (DELETE) - Delete
 
-app.delete('/user/:id', function (req, res) {
+router.delete('/:id', function (req, res) {
   console.log(
     `Request from ${req.ip}, method: ${req.method}, path: ${req.path}`
   );
@@ -108,8 +102,5 @@ app.delete('/user/:id', function (req, res) {
   console.log(userList);
 });
 
-// ______________________________
-
-app.listen(3000, function () {
-  console.log(`3000번 port에 http server를 띄웠습니다`);
-});
+// router 객체를 모듈화하여 내보내기
+module.exports = router;
