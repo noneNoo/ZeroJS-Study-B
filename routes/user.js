@@ -8,9 +8,6 @@ const router = express.Router();
 // app을 router로 바꿔주었다
 // '/user' 경로를 '/'로 수정하였다
 
-// 유저 목록도 여기로 옮겼다
-const userList = [];
-
 //      유저 전체 목록 불러오기 (Get) - Read
 router.get('/list', function (req, res) {
   console.log(
