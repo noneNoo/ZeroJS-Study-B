@@ -6,17 +6,17 @@
 const userList = [];
 
 //      유저 전체 목록 불러오기 (Get) - Read
-const getUsers = function () {
+const getUsers = async function () {
   return userList;
 };
 
 //      특정 유저 데이터 불러오기 (GET) - Read
-const getAUser = function () {
+const getAUser = async function () {
   return userList;
 };
 
 //      유저 추가 (POST) - Create
-const addUser = function (id, twtId, name) {
+const addUser = async function (id, twtId, name) {
   // 인자로 넘겨받은 데이터를 service의 userlist에 push
   const newUser = {
     id: id,
@@ -31,7 +31,7 @@ const addUser = function (id, twtId, name) {
 };
 
 //      특정 유저 데이터의 일부분 업데이트 (PATCH - 단일 자원을 업데이트) - Update
-const patchUser = function (id, twtId, name) {
+const patchUser = async function (id, twtId, name) {
   // 첫 번째 유저
   userList.find((user) => {
     if (user.id === id) {
@@ -48,7 +48,7 @@ const patchUser = function (id, twtId, name) {
 };
 
 //      전체 유저 업데이트 (PUT - 전체 자원을 업데이트) - Update
-const putUsers = function (newContent) {
+const putUsers = async function (newContent) {
   for (let i = 0; i < userList.length; i++) {
     userList[i].group = newContent;
   }
@@ -57,7 +57,7 @@ const putUsers = function (newContent) {
 };
 
 //      특정 유저 삭제하기 (DELETE) - Delete
-const deleteUser = function (id) {
+const deleteUser = async function (id) {
   const currentUserIndex = id - 1;
 
   userList.splice(currentUserIndex, 1);
